@@ -145,9 +145,10 @@ public class PracticeFormTest {
         Assert.assertEquals(tableValueList.get(8).getText(), currentAddressValue, "Address text is not displayed right in the table");
         Assert.assertEquals(tableDescriptionList.get(9).getText(), "State and City", "State and city text is not displayed right in the table");
         Assert.assertEquals(tableValueList.get(9).getText(), stateValue + " " + cityValue, "State and city text is not displayed right in the table");
+
     }
 }
-
+    // test de modificare pentru git
 
 
 
