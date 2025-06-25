@@ -2,27 +2,50 @@ package Tests;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.Test;
+import sharedData.SharedData;
 
-public class WindowsTest {
-    public WebDriver driver;
+import java.util.ArrayList;
+import java.util.List;
+
+public class WindowsTest extends SharedData {
 
     @Test
     public void testMethod(){
-        driver = new ChromeDriver();
-        driver.get("https://demoqa.com");
-        driver.manage().window().maximize();
 
-        WebElement AlertFrame = driver.findElement(By.xpath("//h5[text()='Alerts, Frame & Windows']"));
+        WebElement alertFrameWindowMenu = driver.findElement(By.xpath("//h5[text()='Alerts, Frame & Windows']"));
         JavascriptExecutor executor = (JavascriptExecutor) driver;
-        executor.executeScript("arguments[0].click();", AlertFrame);
+        executor.executeScript("arguments[0].click();", alertFrameWindowMenu);
 
-        //browser windows in loc de Practice Form
+        WebElement browserWindowsSubMenu = driver.findElement(By.xpath("//span[text()='Browser Windows']"));
+        executor.executeScript("arguments[0].click();", browserWindowsSubMenu);
 
-        WebElement windowElement = driver.findElement(By.xpath("//span[text()='Browser Windows']"));
-        executor.executeScript("arguments[0].click();", windowElement);
+        WebElement newTabElement = driver.findElement(By.id("tabButton"));
+        newTabElement.click();
+        System.out.println(driver.getCurrentUrl());
+
+        List<String> tabList = new ArrayList<>(driver.getWindowHandles());
+        driver.switchTo().window(tabList.get(1));
+        System.out.println(driver.getCurrentUrl());
+
+        driver.close();
+        driver.switchTo().window(tabList.get(0));
+        System.out.println(driver.getCurrentUrl());
+
+        WebElement newWindow = driver.findElement(By.id("windowButton"));
+        newWindow.click();
+        System.out.println(driver.getCurrentUrl());
+
+        List<String> windowList = new ArrayList<>(driver.getWindowHandles());
+        driver.switchTo().window(windowList.get(1));
+        System.out.println(driver.getCurrentUrl());
+
+        driver.close();
+        driver.switchTo().window(windowList.get(0));
+        System.out.println(driver.getCurrentUrl());
+
+        driver.quit();
+
     }
 }

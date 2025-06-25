@@ -1,71 +1,47 @@
 package Tests;
 
+import helperMethods.AlertHelper;
+import helperMethods.ElementHelper;
+import helperMethods.PageHelper;
 import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
+import sharedData.SharedData;
 
-import java.time.Duration;
-
-public class AlertTest {
-
-    public WebDriver driver;
+public class AlertTest extends SharedData {
 
     @Test
-
     public void testMethod() {
-        //deschidem o instanta de Chrome
-        driver = new ChromeDriver();
 
-        driver.get("https://demoqa.com");
+        ElementHelper elementHelper = new ElementHelper(driver);
+        AlertHelper alertHelper = new AlertHelper(driver);
+        PageHelper pageHelper = new PageHelper(driver);
 
-        driver.manage().window().maximize();
+        WebElement alertFrameWindowMenu = driver.findElement(By.xpath("//h5[text()='Alerts, Frame & Windows']"));
+        elementHelper.clickJSElement(alertFrameWindowMenu);
 
-        // wait implicit linia cu duration.ofseconds
+        WebElement browserWindowsSubMenu = driver.findElement(By.xpath("//span[text()='Alerts']"));
+        elementHelper.clickJSElement(browserWindowsSubMenu);
 
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        WebElement alerOkButtonElement = driver.findElement(By.id("alertButton"));
+        elementHelper.clickElement(alerOkButtonElement);
 
-        JavascriptExecutor executor = (JavascriptExecutor) driver;
+        alertHelper.acceptAlert();
 
-        WebElement AlertFrame = driver.findElement(By.xpath("//h5[text()='Alerts, Frame & Windows']"));
-        executor.executeScript("arguments[0].click();", AlertFrame);
+        WebElement alertWaitButtonElement = driver.findElement(By.id("timerAlertButton"));
+        elementHelper.clickElement(alertWaitButtonElement);
 
-        WebElement alertElement = driver.findElement(By.xpath("//span[text()='Alerts']"));
-        alertElement.click();
+        alertHelper.acceptAlert();
 
-
-        WebElement alertOkButton = driver.findElement(By.id("alertButton"));
-        alertOkButton.click();
-
-        // wait explicit pentru alerta
-
-        WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.alertIsPresent());
-
-//        try {
-//            Thread.sleep(5000); //
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-
-        Alert alertOk = driver.switchTo().alert();
-        alertOk.accept();
+        pageHelper.scrollPage(0, 400);
 
         WebElement alertOkCancelElement = driver.findElement(By.id("confirmButton"));
-        alertOkCancelElement.click();
+        elementHelper.clickElement(alertOkCancelElement);
 
-        Alert alertOkCancel = driver.switchTo().alert();
-        alertOkCancel.dismiss();
+        alertHelper.dismissAlert();
 
         WebElement alertPromptElement = driver.findElement(By.id("promtButton"));
-        alertPromptElement.click();
+        elementHelper.clickElement(alertPromptElement);
 
-        Alert alertPrompt = driver.switchTo().alert();
-        alertPrompt.sendKeys("Fasole si Praslea");
-        alertPrompt.accept();
-
-        driver.quit();
-
+        alertHelper.fillAlert("Formula 1");
     }
 }
