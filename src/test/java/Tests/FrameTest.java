@@ -1,38 +1,45 @@
 package Tests;
 
+import helperMethods.AlertHelper;
+import helperMethods.ElementHelper;
+import helperMethods.FrameHelper;
+import helperMethods.PageHelper;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.Test;
 import sharedData.SharedData;
 
-import java.time.Duration;
+import java.awt.*;
 
 public class FrameTest extends SharedData {
 
     @Test
     public void testMethod() {
 
+        ElementHelper elementHelper = new ElementHelper(driver);
+        FrameHelper frameHelper = new FrameHelper(driver);
+
         WebElement alertFrameWindowMenu = driver.findElement(By.xpath("//h5[text()='Alerts, Frame & Windows']"));
-        JavascriptExecutor executor = (JavascriptExecutor) driver;
-        executor.executeScript("arguments[0].click();", alertFrameWindowMenu);
+        elementHelper.clickJSElement(alertFrameWindowMenu);
 
         WebElement framesELement = driver.findElement(By.xpath("//span[text()='Frames']"));
-        executor.executeScript("arguments[0].click();", framesELement);
+        elementHelper.clickJSElement(framesELement);
 
-        driver.switchTo().frame(driver.findElement(By.xpath("//iframe[@id='frame1']")));
+        frameHelper.switchFrameByElement(driver.findElement(By.xpath("//iframe[@id='frame1']")));
 
         WebElement firstBlockElement = driver.findElement(By.id("sampleHeading"));
-        System.out.println(firstBlockElement.getText());
 
-        driver.switchTo().parentFrame();
+        elementHelper.printTextElement(firstBlockElement);
 
-        driver.switchTo().frame("frame2");
+        frameHelper.switchToParent();
+
+        frameHelper.switchFrameByString("frame2");
+
         WebElement secondBlockElement = driver.findElement(By.id("sampleHeading"));
-        System.out.println(secondBlockElement.getText());
+        elementHelper.printTextElement(secondBlockElement);
 
-        driver.quit();
+
+
     }
 }

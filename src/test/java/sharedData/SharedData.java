@@ -22,10 +22,10 @@ public class SharedData {
         JavascriptExecutor executor = (JavascriptExecutor) driver;
     }
 
-//    @AfterMethod
-//
-//    public void clearEnvironment(){
-//        driver.quit();
-//    }
+    @AfterMethod
+
+    public void clearEnvironment(){
+        driver.quit();
+   }
 
 }
