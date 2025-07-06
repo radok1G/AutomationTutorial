@@ -1,5 +1,6 @@
 package Tests;
 
+import helperMethods.ElementHelper;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
@@ -14,16 +15,16 @@ public class WindowsTest extends SharedData {
     @Test
     public void testMethod(){
 
+        ElementHelper elementHelper = new ElementHelper(driver);
+
         WebElement alertFrameWindowMenu = driver.findElement(By.xpath("//h5[text()='Alerts, Frame & Windows']"));
-        JavascriptExecutor executor = (JavascriptExecutor) driver;
-        executor.executeScript("arguments[0].click();", alertFrameWindowMenu);
+        elementHelper.clickJSElement(alertFrameWindowMenu);
 
         WebElement browserWindowsSubMenu = driver.findElement(By.xpath("//span[text()='Browser Windows']"));
-        executor.executeScript("arguments[0].click();", browserWindowsSubMenu);
+        elementHelper.clickJSElement(browserWindowsSubMenu);
 
         WebElement newTabElement = driver.findElement(By.id("tabButton"));
-        newTabElement.click();
-        System.out.println(driver.getCurrentUrl());
+        elementHelper.clickElement(newTabElement);
 
         List<String> tabList = new ArrayList<>(driver.getWindowHandles());
         driver.switchTo().window(tabList.get(1));

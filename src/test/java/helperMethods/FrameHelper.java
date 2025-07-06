@@ -6,8 +6,6 @@ import org.openqa.selenium.WebElement;
 
 public class FrameHelper {
 
-
-
     public WebDriver driver;
 
     public FrameHelper(WebDriver driver) {
