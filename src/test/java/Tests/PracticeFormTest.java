@@ -3,14 +3,11 @@ package Tests;
 import helperMethods.ElementHelper;
 import helperMethods.PageHelper;
 import org.openqa.selenium.*;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import sharedData.SharedData;
 
 import java.io.File;
-import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
 
@@ -75,7 +72,7 @@ public class PracticeFormTest extends SharedData {
         }
 
         WebElement uploadElement = driver.findElement(By.id("uploadPicture"));
-        String uploadValue = "/Users/raducoroian/IdeaProjects/AutomationTutorial/src/test/resources/Screenshot 2024-08-01 at 09.55.16.png";
+        String uploadValue = "src/test/resources/Screenshot 2024-08-01 at 09.55.16.png";
         File file = new File(uploadValue);
         elementHelper.fillElement(uploadElement, file.getAbsolutePath());
 
@@ -113,7 +110,7 @@ public class PracticeFormTest extends SharedData {
         elementHelper.validateElementEqualsText(tableDescriptionList.get(2), "Gender");
         elementHelper.validateElementEqualsText(tableValueList.get(2), genderValue);
 
-        elementHelper.validateElementEqualsText(tableDescriptionList.get(3), "Mobile Number");
+        elementHelper.validateElementEqualsText(tableDescriptionList.get(3), "Mobile");
         elementHelper.validateElementEqualsText(tableValueList.get(3), mobileValue);
 
         String allSubjects = String.join(", ", subjectsValue);
@@ -132,8 +129,8 @@ public class PracticeFormTest extends SharedData {
         elementHelper.validateElementEqualsText(tableValueList.get(8), currentAddressValue);
 
         elementHelper.validateElementEqualsText(tableDescriptionList.get(9), "State and City");
-        elementHelper.validateElementEqualsText(tableDescriptionList.get(9), stateValue);
-        elementHelper.validateElementEqualsText(tableValueList.get(9), cityValue);
+        elementHelper.validateElementContainsText(tableValueList.get(9), stateValue);
+        elementHelper.validateElementContainsText(tableValueList.get(9), cityValue);
 
     }
 }
