@@ -134,3 +134,6 @@ public class PracticeFormTest extends SharedData {
 
     }
 }
+
+
+//indexpage indexpage = new indexpage ( driver )
